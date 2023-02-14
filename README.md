@@ -5,37 +5,30 @@ Build an IGV container with Xvfb and a script to perform graphics functions, suc
 
 The docker container can be pulled and the make_igv_snapshots.sh script run from the command with a script similar to the following igv-snap.sh bash script, which was written to use Apptainer from a global scratch directory on a Linux HPC:
 
- #!/bin/bash
+	 #!/bin/bash
 
- #location of the apptainer oci cache
+	 #location of the apptainer oci cache
+	SIF_CACHE=/the/path/to/your/apptainer/cache_dir/cache/oci-tmp
 
- SIF_CACHE=/the/path/to/your/apptainer/cache_dir/cache/oci-tmp
+	 #where screenshots will be created
+	snapshotDirectory=/scratch.global/where/to_put/the/igv/images
 
- #where screenshots will be created
+ 	#where bam/vcf file defined in the .igv file are located
+	bamDir=/scratch.global/directory/of/bam/files
 
- snapshotDirectory=/scratch.global/where/to_put/the/igv/images
+ 	#where bam/vcf file defined in the .igv file are located
+	vcfDir=/scratch.global/directory/of/vcf/files
 
- #where bam/vcf file defined in the .igv file are located
+ 	#Directory containing `.igv` files.
+	igvScriptDir=/scratch.global/directory/of/igv/batch/files
 
- bamDir=/scratch.global/directory/of/bam/files
-
- #where bam/vcf file defined in the .igv file are located
-
- vcfDir=/scratch.global/directory/of/vcf/files
-
- #Directory containing `.igv` files.
-
- igvScriptDir=/scratch.global/directory/of/igv/batch/files
-
- #Make sure the APPTAINER_CACHEDIR variable is set.
-
- if [ -z $APPTAINER_CACHEDIR ];
+ 	#Make sure the APPTAINER_CACHEDIR variable is set.
+ 	if [ -z $APPTAINER_CACHEDIR ];
     		then CACHE_DIR=$HOME/.singularity/cache
     		else CACHE_DIR=$APPTAINER_CACHEDIR
 		  fi		
 
- #Make sure cache dir exists so lock file can be created by flock
-
+ 	#Make sure cache dir exists so lock file can be created by flock
 	 mkdir -p $CACHE_DIR
 	LOCK_FILE=$CACHE_DIR/singularity_pull_flock
 	# Create an exclusive filelock with flock pull the container
