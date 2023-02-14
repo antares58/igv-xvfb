@@ -8,27 +8,34 @@ The docker container can be pulled and the make_igv_snapshots.sh script run from
 #!/bin/bash
 
 #location of the apptainer oci cache
+
 SIF_CACHE=/the/path/to/your/apptainer/cache_dir/cache/oci-tmp
 
 #where screenshots will be created
+
 snapshotDirectory=/scratch.global/where/to_put/the/igv/images
 
 #where bam/vcf file defined in the .igv file are located
+
 bamDir=/scratch.global/directory/of/bam/files
 
 #where bam/vcf file defined in the .igv file are located
+
 vcfDir=/scratch.global/directory/of/vcf/files
 
 #Directory containing `.igv` files.
+
 igvScriptDir=/scratch.global/directory/of/igv/batch/files
 
 #Make sure the APPTAINER_CACHEDIR variable is set.
+
 if [ -z $APPTAINER_CACHEDIR ];
     		then CACHE_DIR=$HOME/.singularity/cache
     		else CACHE_DIR=$APPTAINER_CACHEDIR
 		  fi		
 
 #Make sure cache dir exists so lock file can be created by flock
+
 	 mkdir -p $CACHE_DIR
 	LOCK_FILE=$CACHE_DIR/singularity_pull_flock
 	# Create an exclusive filelock with flock pull the container
