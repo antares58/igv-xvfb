@@ -1,7 +1,7 @@
 #!/bin/bash
 cd ${igvScriptDir}
-
-for i in ./*.igv ; do
+files=$(ls *.igv)
+for i in $files ; do
 	echo "Snapshot -> ${i}"
-#	/usr/bin/xvfb-run /igv/IGV_Linux_2.16.0/igv.sh --batch /batchDir/${i}
+	/usr/bin/xvfb-run /igv/IGV_Linux_2.16.0/igv.sh --batch /batchDir/${i}
 done
